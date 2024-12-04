@@ -1,0 +1,21 @@
+trigger:  none
+stages:
+  - stage: Build
+    jobs:
+      - job: BuildJob
+        displayName: "Buildandpublish"
+            pool:
+            vmimage: 'windows-2019'
+        steps:
+          - 
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'VM-Build'
+    Contents: '**'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+
+  - task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(build.artifactstagingdirectory)'
+    artifact: 'asds'
+    publishLocation: 'pipeline'
